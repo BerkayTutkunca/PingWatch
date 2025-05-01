@@ -1,0 +1,49 @@
+﻿<Window x:Name="loaded" x:Class="PingWatch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PingWatch"
+        mc:Ignorable="d"
+        Title="PingWatch Network Tester" Height="350" Width="600" Loaded="MainWindow_Loaded">
+    <Grid Margin="10">
+        <StackPanel Margin="1">
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <Button Content="Test All Devices" Click="Button_Click" Height="30" Width="150" Margin="0,0,10,0"/>
+                <Button Content="Firewall UDP Test" Height="30" Width="150" Click="Firewall_Button_Click"/>
+                <Label x:Name="ipInfoLabel" Content="🐺 IP Info" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="30" Foreground="DarkSlateGray" Cursor="Hand" Margin="10,0,10,0"></Label>
+                <Button Content="Edit Settings" Height="30" Width="100" Click="EditConfig_Click"/>
+            </StackPanel>
+            <DataGrid x:Name="deviceGrid" AutoGenerateColumns="False" ItemsSource="{Binding Devices}" IsReadOnly="True" CanUserAddRows="False" MouseDoubleClick="deviceGrid_MouseDoubleClick">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="IP" Binding="{Binding IP}" Width="*"/>
+                    <DataGridTemplateColumn Header="State" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Status}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock" >
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Online">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Offline">
+                                                    <Setter Property="Foreground" Value="Red"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Unknown">
+                                                    <Setter Property="Foreground" Value="Gray"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Ping (ms)" Binding="{Binding PingMs}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>
