@@ -15,6 +15,7 @@ namespace PingWatch.Models
     public class DeviceModel : INotifyPropertyChanged
     {
         private string name;
+
         private string ip;
         private ConnectionStatus status;
         private long? pingMs;
